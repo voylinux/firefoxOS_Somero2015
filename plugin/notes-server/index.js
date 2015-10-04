@@ -1,25 +1,23 @@
-var http      = require('http');
 var express   = require('express');
 var fs        = require('fs');
 var io        = require('socket.io');
 var _         = require('underscore');
 var Mustache  = require('mustache');
 
-var app       = express();
+var app       = express.createServer();
 var staticDir = express.static;
-var server    = http.createServer(app);
 
-io = io(server);
+io            = io.listen(app);
 
 var opts = {
 	port :      1947,
 	baseDir :   __dirname + '/../../'
 };
 
-io.on( 'connection', function( socket ) {
+io.sockets.on( 'connection', function( socket ) {
 
-	socket.on( 'new-subscriber', function( data ) {
-		socket.broadcast.emit( 'new-subscriber', data );
+	socket.on( 'connect', function( data ) {
+		socket.broadcast.emit( 'connect', data );
 	});
 
 	socket.on( 'statechanged', function( data ) {
@@ -28,8 +26,12 @@ io.on( 'connection', function( socket ) {
 
 });
 
-[ 'css', 'js', 'images', 'plugin', 'lib' ].forEach( function( dir ) {
-	app.use( '/' + dir, staticDir( opts.baseDir + dir ) );
+app.configure( function() {
+
+	[ 'css', 'js', 'images', 'plugin', 'lib' ].forEach( function( dir ) {
+		app.use( '/' + dir, staticDir( opts.baseDir + dir ) );
+	});
+
 });
 
 app.get('/', function( req, res ) {
@@ -50,7 +52,7 @@ app.get( '/notes/:socketId', function( req, res ) {
 });
 
 // Actually listen
-server.listen( opts.port || null );
+app.listen( opts.port || null );
 
 var brown = '\033[33m',
 	green = '\033[32m',

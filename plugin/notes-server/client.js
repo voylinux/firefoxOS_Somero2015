@@ -41,7 +41,7 @@
 	}
 
 	// When a new notes window connects, post our current state
-	socket.on( 'new-subscriber', function( data ) {
+	socket.on( 'connect', function( data ) {
 		post();
 	} );
 
