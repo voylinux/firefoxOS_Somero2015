@@ -202,6 +202,16 @@ body {
   color: #fff;
   background: #068ee9; }
 
+  .reveal .logo-link {
+    background-color: transparent;
+  }
+
+  .reveal a.logo-link:hover{
+    background-color: transparent;
+  }
+
+
+
 /*********************************************
  * IMAGES
  *********************************************/
@@ -211,15 +221,26 @@ body {
   border: 4px solid #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 
+  .reveal .logo-link img {
+    background-color: #FFF;
+    border: none;
+    margin: 0;
+    box-shadow: none;
+  }
+
 .reveal a img {
   -webkit-transition: all 0.15s linear;
   -moz-transition: all 0.15s linear;
-  transition: all 0.15s linear; }
+  transition: all 0.15s linear;
+  padding: 20px;
+  max-width: 120px;
+}
 
-.reveal a:hover img {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: #42affa;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
+
+  .reveal a.logo-link:hover img {
+    background-color: transparent;
+    background-color: #FFF;
+  }
 
 /*********************************************
  * NAVIGATION CONTROLS
